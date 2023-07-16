@@ -16,12 +16,13 @@ app.listen(PORT, console.log(
 })
 
     app.get('/moedapi',async (req,res)=>{
-        const url = req.query.url
-        const data = await fetchResultApi(url)
+        const num = req.query.num
+	const gove = req.query.gove
+        const data = await fetchResultApi(num,gove)
         res.json({data : data})
 })
 
-const fetchResultApi = async (url = "http://moed.gov.sy/api_2021/sec_2022/12th.php?dt=1&br=91&id=15646&gove=2")=>{
+const fetchResultApi = async (num=15646,gove=2)=>{
     try {
     const options = {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -33,7 +34,7 @@ const fetchResultApi = async (url = "http://moed.gov.sy/api_2021/sec_2022/12th.p
         }
     }
 
-        const response = await fetch(url,options)
+        const response = await fetch(`http://moed.gov.sy/api_2021/sec_2022/12th.php?dt=1&br=91&id=${num}&gove=${gove}`,options)
         const data = await response.json();
         console.log(data)
         return data
